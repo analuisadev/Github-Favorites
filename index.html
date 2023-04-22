@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <title>Github Favorites</title>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>GitHub Favorites</h1>
+            <div class="search-user">
+                <label class="sr-only" for="github-search">Usuário do GitHub</label>
+                <input id="github-search"type="text" placeholder="Usuário do GitHub">
+                <button>&plus;</button>
+            </div>
+        </header>
+        <table>
+            <thead>
+                <tr>
+                    <th>Usuários</th>
+                    <th>Repositórios</th>
+                    <th>Seguidores</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="github-user">
+                        <img src="https://github.com/analuisadev.png" alt="github profile picture">
+                        <a href="https://github.com/analuisadev" target="_blank">
+                            <p>Ana Luisa Santos</p>
+                            <span>analuisadev</span>
+                        </a>
+                    </td>
+                    <td class="github-repositories">
+                        41
+                    </td>
+                    <td class="github-followers">
+                        108
+                    </td>
+                    <td>
+                        <button class="remove-user">&times;</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="github-user">
+                        <img src="https://github.com/maykbrito.png" alt="github profile picture">
+                        <a href="https://github.com/maykbrito" target="_blank">
+                            <p>Mayk Brito</p>
+                            <span>maykbrito</span>
+                        </a>
+                    </td>
+                    <td class="github-repositories">
+                        103
+                    </td>
+                    <td class="github-followers">
+                        13.4k
+                    </td>
+                    <td>
+                        <button class="remove-user">&times;</button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

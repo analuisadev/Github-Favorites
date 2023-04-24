@@ -1,20 +1,41 @@
 // Classes que irá conter a lógica dos dados (como os dados serão estruturados/organizados)
 
+export class GithubUser {
+    static search(username) {
+        const endPoint = `https://api.github.com/users/${username}`
+
+        return fetch(endPoint)
+        .then(data => data.json())
+        .then(({ login, name, public_repos, followers }) => ({
+            login,
+            name,
+            public_repos,
+            followers
+        }))
+    }
+}
+
 export class Favorites {
     constructor(root) {
-        this.root = document.querySelector(root)    
+        this.root = document.querySelector(root)
         this.load()
     }
 
+    async add(username) {
+        const user = await GithubUser.search(username)
+    }
+
     load() {
-        this.entries = [
-            {
-                login: 'analuisadev',
-                name: 'Ana Luisa Santos',
-                public_repos: '41',
-                followers: '108'
-            }
-        ]
+        this.entries = JSON.parse(localStorage.getItem
+            ('@github-favorites:')) || []
+    }
+
+    delete(user) {
+        const filteredEntries = this.entries
+            .filter(entry => entry.login !== user.login)
+
+        this.entries = filteredEntries
+        this.update()
     }
 }
 
@@ -27,6 +48,17 @@ export class FavoritesView extends Favorites {
         this.tbody = this.root.querySelector('table tbody')
 
         this.update()
+        this.onAdd()
+    }
+
+    onAdd() {
+        const addUser = this.root.querySelector('.search-user button')
+
+        addUser.onclick = () => {
+            const { value } = this.root.querySelector('.search-user input')
+
+            this.add(value)
+        }
     }
 
     update() {
@@ -34,14 +66,20 @@ export class FavoritesView extends Favorites {
 
         this.entries.forEach(userInfo => {
             const row = this.createRow()
-            
+
             row.querySelector('.github-user img').src = `https://github.com/${userInfo.login}.png`
             row.querySelector('.github-user img').alt = `github profile picture of ${userInfo.name}`
             row.querySelector('.github-user p').textContent = userInfo.name
             row.querySelector('.github-user span').textContent = userInfo.login
             row.querySelector('.github-repositories').textContent = userInfo.public_repos
             row.querySelector('.github-followers').textContent = userInfo.followers
+            row.querySelector('.remove-user').onclick = () => {
+                const isOk = confirm('Tem certeza que deseja deletar esta linha?')
 
+                if (isOk) {
+                    this.delete(userInfo)
+                }
+            }
             this.tbody.append(row)
         })
     }

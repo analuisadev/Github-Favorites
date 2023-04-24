@@ -1,19 +1,6 @@
+import { GithubUser } from "./GithubUser.js"
+
 // Classes que irá conter a lógica dos dados (como os dados serão estruturados/organizados)
-
-export class GithubUser {
-    static search(username) {
-        const endPoint = `https://api.github.com/users/${username}`
-
-        return fetch(endPoint)
-        .then(data => data.json())
-        .then(({ login, name, public_repos, followers }) => ({
-            login,
-            name,
-            public_repos,
-            followers
-        }))
-    }
-}
 
 export class Favorites {
     constructor(root) {
@@ -23,6 +10,13 @@ export class Favorites {
 
     async add(username) {
         try{
+
+            const userExists = this.entries.find(entry => entry.login === username)
+
+            if(userExists) {
+                throw new Error('Usuário já adicionado!')
+            }
+
             const user = await GithubUser.search(username)
 
             if(user.login === undefined) {
@@ -87,6 +81,7 @@ export class FavoritesView extends Favorites {
             row.querySelector('.github-user img').src = `https://github.com/${userInfo.login}.png`
             row.querySelector('.github-user img').alt = `github profile picture of ${userInfo.name}`
             row.querySelector('.github-user p').textContent = userInfo.name
+            row.querySelector('.github-user a').href = `https://github.com/${userInfo.login}`
             row.querySelector('.github-user span').textContent = userInfo.login
             row.querySelector('.github-repositories').textContent = userInfo.public_repos
             row.querySelector('.github-followers').textContent = userInfo.followers

@@ -31,7 +31,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 O Github Favorites é uma aplicação que consiste em criar uma tabela perfis referência dos usuários, permitindo o acesso direto ao perfil adicionado.
 
-- [Acesse o projeto finalizado, online]()
+- [Acesse o projeto finalizado, online](https://analuisadev.github.io/Github-Favorites/)
 
 ## :memo: Licença
 
